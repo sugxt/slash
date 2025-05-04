@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cgd8jljauf6do"]
+[gd_scene load_steps=14 format=3 uid="uid://cgd8jljauf6do"]
 
 [ext_resource type="Texture2D" uid="uid://u0i4v2a2qrgf" path="res://assets/textures/dev/grids/Dark/texture_07.png" id="1_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://ca253cruybbp1" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_sugp2"]
@@ -25,6 +25,96 @@ glow_enabled = true
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sugp2"]
 height = 1.2
 
+[sub_resource type="Animation" id="Animation_sugp2"]
+resource_name = "jumping"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.0523599, 0, 0.010472), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.1, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jyhfs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tbgi4"]
+resource_name = "landing"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.0174533, 0, 0.0122173), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.1, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tbgi4"]
+_data = {
+&"RESET": SubResource("Animation_jyhfs"),
+&"jumping": SubResource("Animation_sugp2"),
+&"landing": SubResource("Animation_tbgi4")
+}
+
 [node name="World" type="Node3D"]
 
 [node name="stage" type="Node3D" parent="."]
@@ -32,13 +122,19 @@ height = 1.2
 [node name="CSGBox3D" type="CSGBox3D" parent="stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
-size = Vector3(20, 1, 20)
+size = Vector3(43.0134, 1, 41.9158)
 material = SubResource("StandardMaterial3D_jyhfs")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="stage"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5149, -12.2939)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.529011, -2.74292)
 use_collision = true
-size = Vector3(20, 1, 20)
+size = Vector3(20, 1, 2.54755)
+material = SubResource("StandardMaterial3D_jyhfs")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="stage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0514498, 1.96034, -12.3441)
+use_collision = true
+size = Vector3(20, 1, 2.54755)
 material = SubResource("StandardMaterial3D_jyhfs")
 
 [node name="env" type="Node3D" parent="."]
@@ -62,10 +158,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.607604, 0)
 shape = SubResource("CapsuleShape3D_sugp2")
 disabled = true
 
-[node name="head" type="Node3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
-
-[node name="Camera3D" type="Camera3D" parent="player/head"]
-
 [node name="RayCast3D" type="RayCast3D" parent="player"]
 target_position = Vector3(0, 2, 0)
+
+[node name="Neck" type="Node3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="head" type="Node3D" parent="player/Neck"]
+
+[node name="eyes" type="Node3D" parent="player/Neck/head"]
+
+[node name="Camera3D" type="Camera3D" parent="player/Neck/head/eyes"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="player/Neck/head/eyes"]
+libraries = {
+&"": SubResource("AnimationLibrary_tbgi4")
+}
