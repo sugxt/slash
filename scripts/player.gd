@@ -1,5 +1,11 @@
 extends CharacterBody3D
 
+# Weapon Variables
+var meele_damage = 50
+@onready var meele_animator: AnimationPlayer = $MeeleAnimator
+@onready var meele_weapon: Node3D = $"Neck/head/eyes/Camera3D/Meele Weapon"
+@onready var hitbox: Area3D = $"Neck/head/eyes/Camera3D/Meele Weapon/Hitbox"
+
 # Player Nodes
 @onready var neck: Node3D = $Neck
 @onready var head = $Neck/head
@@ -56,8 +62,23 @@ var air_lerp_speed = 3.0
 var direction = Vector3.ZERO
 const mouse_sens = 0.2
 
+# 1. Fixed melee function
+func meele():
+	if Input.is_action_just_pressed("meele"):
+		if not meele_animator.is_playing():
+			meele_animator.play("swing")
+			meele_animator.queue("reset")
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	hitbox.monitoring = false
+	hitbox.body_entered.connect(_on_hitbox_body_entered)
+	
+func _on_hitbox_body_entered(body):
+	if body.is_in_group("Enemy"):
+		print("Hit enemy for damage:", meele_damage)
+		body.take_damage(meele_damage)
+
 func _input(event):
 	
 	# Mouse Event Handling
@@ -73,6 +94,7 @@ func _input(event):
 
 
 func _physics_process(delta: float) -> void:
+	meele()
 	# Declaring Input
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	#Handling Movement Input and States
@@ -156,6 +178,7 @@ func _physics_process(delta: float) -> void:
 		
 		eyes.position.y = lerp(eyes.position.y,head_bobbing_vector.y*(head_bobbing_current_intensity/2.0), delta * lerp_speed)
 		eyes.position.x = lerp(eyes.position.x,head_bobbing_vector.x*head_bobbing_current_intensity, delta * lerp_speed)
+		
 	else:
 		eyes.position.y = lerp(eyes.position.y,0.0, delta * lerp_speed)
 		eyes.position.x = lerp(eyes.position.x,0.0, delta * lerp_speed)
