@@ -4,7 +4,7 @@ extends CharacterBody3D
 var meele_damage = 50
 @onready var meele_animator: AnimationPlayer = $MeeleAnimator
 @onready var meele_weapon: Node3D = $"Neck/head/eyes/Camera3D/Meele Weapon"
-@onready var hitbox: Area3D = $"Neck/head/eyes/Camera3D/Meele Weapon/Hitbox"
+@onready var hitbox: Area3D = $Neck/head/eyes/Hitbox
 
 # Player Nodes
 @onready var neck: Node3D = $Neck
@@ -60,7 +60,7 @@ var last_velocity = Vector3.ZERO
 var lerp_speed = 7.5
 var air_lerp_speed = 3.0
 var direction = Vector3.ZERO
-const mouse_sens = 0.2
+const mouse_sens = 0.13
 
 # 1. Fixed melee function
 func meele():
@@ -77,7 +77,8 @@ func _ready():
 func _on_hitbox_body_entered(body):
 	if body.is_in_group("Enemy"):
 		print("Hit enemy for damage:", meele_damage)
-		body.take_damage(meele_damage)
+		var direction_to_enemy = (body.global_transform.origin - global_transform.origin).normalized()
+		body.take_damage(meele_damage, direction_to_enemy)
 
 func _input(event):
 	
