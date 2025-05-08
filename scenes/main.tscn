@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://cgd8jljauf6do"]
+[gd_scene load_steps=42 format=4 uid="uid://cgd8jljauf6do"]
 
 [ext_resource type="Texture2D" uid="uid://u0i4v2a2qrgf" path="res://assets/textures/dev/grids/Dark/texture_07.png" id="1_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://ca253cruybbp1" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_sugp2"]
@@ -339,7 +339,7 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tefeu"]
-size = Vector3(1.97974, 1, 1)
+size = Vector3(1.97974, 0.333984, 1.10938)
 
 [sub_resource type="Animation" id="Animation_o6xl0"]
 length = 0.001
@@ -378,18 +378,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(-0.462512, 3.14159, 0.462512)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Neck/head/eyes/Hitbox:monitoring")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_85g3d"]
@@ -431,7 +419,7 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(5.27802, 2.07053),
+"transitions": PackedFloat32Array(2.73207, 1),
 "update": 0,
 "values": [Vector3(0.537, -0.413, -0.374), Vector3(0.537, -0.303, -0.374)]
 }
@@ -443,21 +431,36 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(4.75683, 2.07053),
+"transitions": PackedFloat32Array(2.73208, 1.10957),
 "update": 0,
 "values": [Vector3(-0.462512, 0.856957, 0.462512), Vector3(-0.462512, 3.14159, 0.462512)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Neck/head/eyes/Hitbox:monitoring")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+
+[sub_resource type="Animation" id="Animation_choun"]
+resource_name = "slide_flip"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Neck/head/eyes/Camera3D/Meele Weapon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(0.297302, 1.86607),
+"update": 0,
+"values": [Vector3(-0.462512, 3.14159, 0.462512), Vector3(-0.462512, 3.02815, -5.82067)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Neck/head/eyes/Camera3D/Meele Weapon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(0.277393, 3.4822),
+"update": 0,
+"values": [Vector3(0.537, -0.303, -0.374), Vector3(0.537, -0.303, -0.374)]
 }
 
 [sub_resource type="Animation" id="Animation_tefeu"]
@@ -483,7 +486,7 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.3),
-"transitions": PackedFloat32Array(4, 4, 2.63902),
+"transitions": PackedFloat32Array(4, 0.420448, 2.63902),
 "update": 0,
 "values": [Vector3(0.537, -0.303, -0.374), Vector3(0.307, -0.303, -0.504), Vector3(0.537, -0.413, -0.374)]
 }
@@ -495,21 +498,26 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.3),
-"transitions": PackedFloat32Array(3.86374, 3.86374, 2.63902),
+"transitions": PackedFloat32Array(3.86374, 0.406125, 2.63902),
 "update": 0,
 "values": [Vector3(-0.462512, 3.14159, 0.462512), Vector3(-1.03323, 3.14159, 0.462512), Vector3(-0.462512, 0.856957, 0.462512)]
 }
-tracks/3/type = "value"
+tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Neck/head/eyes/Hitbox:monitoring")
+tracks/3/path = NodePath(".")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, true]
+"times": PackedFloat32Array(0.233333, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"start_meele_hitbox"
+}, {
+"args": [],
+"method": &"stop_meele_hitbox"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_85g3d"]
@@ -517,6 +525,7 @@ _data = {
 &"RESET": SubResource("Animation_o6xl0"),
 &"idle": SubResource("Animation_85g3d"),
 &"reset": SubResource("Animation_tipki"),
+&"slide_flip": SubResource("Animation_choun"),
 &"swing": SubResource("Animation_tefeu")
 }
 
@@ -542,12 +551,14 @@ material = SubResource("StandardMaterial3D_jyhfs")
 [node name="CSGBox3D2" type="CSGBox3D" parent="stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.529011, -2.74292)
 use_collision = true
+collision_mask = 3
 size = Vector3(20, 1, 2.54755)
 material = SubResource("StandardMaterial3D_jyhfs")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0514498, 1.96034, -10.2728)
 use_collision = true
+collision_mask = 3
 size = Vector3(20, 1, 2.54755)
 material = SubResource("StandardMaterial3D_jyhfs")
 
@@ -643,9 +654,10 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.537, -0.413, -3.58998)
 collision_layer = 32768
 collision_mask = 2
+monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="player/Neck/head/eyes/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.253253, 0.235117, 2.49267)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.253253, 0.477067, 2.43798)
 shape = SubResource("BoxShape3D_tefeu")
 debug_color = Color(0.145858, 0.000242386, 0.261931, 0.42)
 
@@ -654,36 +666,10 @@ libraries = {
 &"": SubResource("AnimationLibrary_85g3d")
 }
 
-[node name="enemy" type="CharacterBody3D" parent="." groups=["Enemy"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98662, 0.214735, 0)
-collision_layer = 2
-collision_mask = 3
-script = ExtResource("6_tefeu")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="enemy"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02788, 0)
-shape = SubResource("CapsuleShape3D_tbgi4")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="enemy"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02788, 0)
-mesh = SubResource("CapsuleMesh_o6xl0")
-skeleton = NodePath("../CollisionShape3D")
-
-[node name="RigidBody3D" type="RigidBody3D" parent="enemy"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="enemy/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02788, 0)
-shape = SubResource("CapsuleShape3D_tbgi4")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="enemy/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02788, 0)
-mesh = SubResource("CapsuleMesh_o6xl0")
-skeleton = NodePath("../CollisionShape3D")
-
 [node name="enemy2" type="CharacterBody3D" parent="." groups=["Enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.99364, 1.04554, -3.41373)
 collision_layer = 2
-collision_mask = 3
+collision_mask = 2
 script = ExtResource("6_tefeu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="enemy2"]
@@ -702,6 +688,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02788, 0)
 shape = SubResource("CapsuleShape3D_tbgi4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="enemy2/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02788, 0)
+mesh = SubResource("CapsuleMesh_o6xl0")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="enemy3" type="CharacterBody3D" parent="." groups=["Enemy"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8567, 2.5975, -10.7675)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("6_tefeu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enemy3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02788, 0)
+shape = SubResource("CapsuleShape3D_tbgi4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="enemy3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02788, 0)
+mesh = SubResource("CapsuleMesh_o6xl0")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="enemy3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enemy3/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02788, 0)
+shape = SubResource("CapsuleShape3D_tbgi4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="enemy3/RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02788, 0)
 mesh = SubResource("CapsuleMesh_o6xl0")
 skeleton = NodePath("../CollisionShape3D")
