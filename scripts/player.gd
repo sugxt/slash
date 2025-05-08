@@ -21,6 +21,7 @@ var current_speed = 5.0
 const walking_speed = 5.0
 const sprint_speed = 8.0
 const crouching_speed = 3.0
+var jump_counter = 0;
 
 #States
 var walking = false
@@ -65,9 +66,18 @@ const mouse_sens = 0.13
 # 1. Fixed melee function
 func meele():
 	if Input.is_action_just_pressed("meele"):
-		if not meele_animator.is_playing():
-			meele_animator.play("swing")
-			meele_animator.queue("reset")
+		#if not meele_animator.is_playing():
+		meele_animator.play("swing")
+		meele_animator.queue("reset")
+
+func start_meele_hitbox():
+	hitbox.monitoring = true
+	hitbox.set_deferred("monitoring", true) # Safer if animation triggers mid-frame
+
+func stop_meele_hitbox():
+	hitbox.monitoring = false
+	hitbox.set_deferred("monitoring", false)
+
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -75,6 +85,8 @@ func _ready():
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
 	
 func _on_hitbox_body_entered(body):
+	if !hitbox.monitoring:
+		return;
 	if body.is_in_group("Enemy"):
 		print("Hit enemy for damage:", meele_damage)
 		var direction_to_enemy = (body.global_transform.origin - global_transform.origin).normalized()
@@ -93,6 +105,15 @@ func _input(event):
 		head.rotate_x(deg_to_rad(-event.relative.y * mouse_sens))
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
 
+func jump_state():
+	if is_on_floor():
+		return true;
+	elif jump_counter < 1:
+		jump_counter +=1
+		return true
+	else:
+		return false
+	
 
 func _physics_process(delta: float) -> void:
 	meele()
@@ -112,10 +133,13 @@ func _physics_process(delta: float) -> void:
 		
 		if sprinting && input_dir != Vector2.ZERO && is_on_floor():
 			sliding = true
+			print(hitbox.monitoring)
 			slide_timer = slide_timer_max
 			slide_vector = input_dir
 			free_looking = true
 			print("Slide Begin")
+			meele_animator.play("slide_flip")
+			meele_animator.queue("RESET")
 		
 		walking = false
 		sprinting = false
@@ -186,14 +210,17 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	
+	
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("ui_accept") and jump_state():
 		velocity.y = jump_velocity
 		sliding = false
 		animation_player.play("jumping")
 	# Handle Landing
 	if is_on_floor() && last_velocity.y < 0.0:
+		jump_counter = 0
 		animation_player.play("landing")
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
